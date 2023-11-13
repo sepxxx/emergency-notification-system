@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,13 +15,20 @@ import java.util.List;
 @Getter
 @Table(name="recipient_list_names")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RecipientListName {
+public class RecipientList {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     long id;
     @Column(name="list_name")
-    String listName;
+    String name;
 
     @OneToMany
     List<Recipient> recipientList;
+
+    public void appendRecipientList(List<Recipient> appendingRecipientList) {
+        if(recipientList==null) {
+            recipientList = new ArrayList<>();
+        }
+        recipientList.addAll(appendingRecipientList);
+    }
 }

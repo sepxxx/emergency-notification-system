@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +25,9 @@ import java.util.List;
 public class CsvController {
     RecipientSaverService recipientSaverService;
 
+
     @PostMapping("/upload")
-    public void uploadCSV(@RequestParam("file") MultipartFile file) throws IOException {
+    public void uploadCSV(@RequestParam("file") MultipartFile file, @RequestBody String recipientsListName) throws IOException {
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema csvSchema = csvMapper.schemaFor(Recipient.class)
                 .withColumnSeparator(',').withSkipFirstDataRow(true);
@@ -38,7 +40,7 @@ public class CsvController {
         List<Recipient> elements = iterator.readAll();
 
         System.out.println(elements.size());
-        recipientSaverService.saveRecipients(elements);
+        recipientSaverService.saveRecipients(elements, recipientsListName);
 //        return elements;
     }
 }

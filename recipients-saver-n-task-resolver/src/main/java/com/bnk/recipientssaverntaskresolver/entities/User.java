@@ -1,7 +1,7 @@
 package com.bnk.recipientssaverntaskresolver.entities;
 
 
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientListName;
+import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientList;
 import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Task;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,7 +25,7 @@ public class User {
     String username;
 
     @OneToMany
-    List<RecipientListName> recipientListNames;
+    List<RecipientList> recipientLists;
 
     @OneToMany
     List<Task> taskList;

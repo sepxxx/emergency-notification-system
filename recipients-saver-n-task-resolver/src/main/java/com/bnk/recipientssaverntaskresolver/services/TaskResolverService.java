@@ -3,7 +3,6 @@ package com.bnk.recipientssaverntaskresolver.services;
 import com.bnk.recipientssaverntaskresolver.dtos.TaskDto;
 import com.bnk.recipientssaverntaskresolver.entities.User;
 import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Recipient;
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientListName;
 import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Notification;
 import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Task;
 import com.bnk.recipientssaverntaskresolver.repositories.*;
@@ -12,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +30,11 @@ public class TaskResolverService {
                 taskDto.getRecipientsListName(),
                 taskDto.getText()
         ));
+
         List<Recipient> recipientList = recipientListNameRepository
-                .findAllByListName(task.getRecipientListName());
+                .findAllByName(taskDto.getRecipientsListName())
+                .getRecipientList();
+
         recipientList.forEach(
                 (recipient)->{
                     notificationRepository.save(
