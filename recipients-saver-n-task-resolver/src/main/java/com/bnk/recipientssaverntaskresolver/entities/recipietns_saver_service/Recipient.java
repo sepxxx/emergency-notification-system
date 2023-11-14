@@ -7,6 +7,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -31,5 +32,5 @@ public class Recipient {
     String token;
 
     @ManyToMany(mappedBy = "recipientList")
-    List<RecipientList> recipientListNameList;
+    Set<RecipientList> recipientListNameList;
 }

@@ -5,9 +5,10 @@ import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Re
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RecipientListNameRepository extends
         JpaRepository<RecipientList, Long> {
 //    List<Recipient> findAllRecipientsByName(String recipientListName);
-    RecipientList findAllByName(String recipientListName);
+    Optional<RecipientList> findByName(String recipientListName);
 }

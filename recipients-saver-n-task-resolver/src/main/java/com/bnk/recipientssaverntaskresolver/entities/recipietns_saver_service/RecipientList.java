@@ -7,7 +7,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -27,7 +29,7 @@ public class RecipientList {
     @JoinTable(name="recipients_recipients_lists",
             joinColumns=@JoinColumn(name="recipient_list_id"),
             inverseJoinColumns = @JoinColumn(name="recipient_id"))
-    List<Recipient> recipientList;
+    Set<Recipient> recipientList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -35,8 +37,12 @@ public class RecipientList {
 
     public void appendRecipientList(List<Recipient> appendingRecipientList) {
         if(recipientList==null) {
-            recipientList = new ArrayList<>();
+            recipientList = new HashSet<>();
         }
         recipientList.addAll(appendingRecipientList);
+    }
+
+    public RecipientList(String name) {
+        this.name = name;
     }
 }

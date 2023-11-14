@@ -17,14 +17,14 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="recipient_id")
     Recipient recipient;
 
     @Column(name="status")
     short status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="task_id")
     Task task;
 

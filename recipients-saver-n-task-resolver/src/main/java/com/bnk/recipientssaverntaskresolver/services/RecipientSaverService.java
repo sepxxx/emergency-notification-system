@@ -1,6 +1,7 @@
 package com.bnk.recipientssaverntaskresolver.services;
 
 import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Recipient;
+import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientList;
 import com.bnk.recipientssaverntaskresolver.repositories.RecipientListNameRepository;
 import com.bnk.recipientssaverntaskresolver.repositories.RecipientRepository;
 import jakarta.transaction.Transactional;
@@ -10,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,14 +21,19 @@ public class RecipientSaverService {
     RecipientListNameRepository recipientListNameRepository;
 
     @Transactional
-    public void saveRecipients(List<Recipient> recipientList, String recipientsListName) {
-        List<Recipient> recipientListWithIds = recipientRepository.saveAll(recipientList);
+    public void saveRecipients(List<Recipient> recipientsWithoutIds, String recipientsListName) {
+        List<Recipient> recipientsWithIds = recipientRepository.saveAll(recipientsWithoutIds);
 
+        Optional<RecipientList> recipientListOptional = recipientListNameRepository.findByName(recipientsListName);
 
-        recipientListNameRepository.findAllByName(recipientsListName).appendRecipientList(
-                recipientListWithIds
-        );
+        RecipientList recipientListWithId;
+        if(recipientListOptional.isEmpty())
+            recipientListWithId = recipientListNameRepository
+                    .save(new RecipientList(recipientsListName));
+        else
+            recipientListWithId = recipientListOptional.get();
 
+        recipientListWithId.appendRecipientList(recipientsWithIds);
 
     }
 }

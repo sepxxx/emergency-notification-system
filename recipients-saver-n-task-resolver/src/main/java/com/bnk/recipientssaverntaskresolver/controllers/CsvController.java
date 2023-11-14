@@ -8,6 +8,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,12 +23,18 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class CsvController {
     RecipientSaverService recipientSaverService;
 
 
     @PostMapping("/upload")
-    public void uploadCSV(@RequestParam("file") MultipartFile file, @RequestBody String recipientsListName) throws IOException {
+    //
+    public void uploadCSV(@RequestParam("file") MultipartFile file, @RequestParam String recipientsListName) throws IOException {
+//        log.info("uploadCSV file desc: {} {} {}", file.getName(),file.getOriginalFilename(),
+//                file.getContentType());
+        log.info("uploadCSV: file: {} recipientsListName: {} ", file.getOriginalFilename(), recipientsListName);
+
         CsvMapper csvMapper = new CsvMapper();
         CsvSchema csvSchema = csvMapper.schemaFor(Recipient.class)
                 .withColumnSeparator(',').withSkipFirstDataRow(true);
@@ -39,7 +46,7 @@ public class CsvController {
                 .readValues(myReader);
         List<Recipient> elements = iterator.readAll();
 
-        System.out.println(elements.size());
+//        System.out.println(elements.size());
         recipientSaverService.saveRecipients(elements, recipientsListName);
 //        return elements;
     }

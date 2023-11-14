@@ -27,7 +27,7 @@ public class Task {
     @ManyToOne
     @JoinColumn(name="user_id")
     User user;
-    public Task(String recipientListName, String text) {
+    public Task(String recipientListName, String text, User user) {
         this.recipientListName = recipientListName;
         this.text = text;
     }
