@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +29,7 @@ public class Recipient {
     String tg;
     @Column(name="token")
     String token;
+
+    @ManyToMany(mappedBy = "recipientList")
+    List<RecipientList> recipientListNameList;
 }

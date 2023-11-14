@@ -22,6 +22,7 @@ public class RecipientSaverService {
     public void saveRecipients(List<Recipient> recipientList, String recipientsListName) {
         List<Recipient> recipientListWithIds = recipientRepository.saveAll(recipientList);
 
+
         recipientListNameRepository.findAllByName(recipientsListName).appendRecipientList(
                 recipientListWithIds
         );

@@ -18,12 +18,14 @@ public class Notification {
     long id;
 
     @ManyToOne
+    @JoinColumn(name="recipient_id")
     Recipient recipient;
 
     @Column(name="status")
     short status;
 
     @ManyToOne
+    @JoinColumn(name="task_id")
     Task task;
 
     public Notification(Recipient recipient, short status, Task task) {

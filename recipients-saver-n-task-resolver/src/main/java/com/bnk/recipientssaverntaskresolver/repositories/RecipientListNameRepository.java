@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface RecipientListNameRepository extends
-        JpaRepository<String, Long> {
+        JpaRepository<RecipientList, Long> {
 //    List<Recipient> findAllRecipientsByName(String recipientListName);
     RecipientList findAllByName(String recipientListName);
 }

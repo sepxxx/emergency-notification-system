@@ -24,10 +24,10 @@ public class User {
     @Column(name="username")
     String username;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     List<RecipientList> recipientLists;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     List<Task> taskList;
 
     public void addTaskToList(Task task) {

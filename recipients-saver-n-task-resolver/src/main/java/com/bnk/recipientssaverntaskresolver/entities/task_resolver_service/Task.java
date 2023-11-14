@@ -17,13 +17,16 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     long id;
+
     @Column(name="recipient_list_name")
     String recipientListName;
+
     @Column(name="text")
     String text;
-//    @Column(name="user_id")
-//    @ManyToOne
-//    User user;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    User user;
     public Task(String recipientListName, String text) {
         this.recipientListName = recipientListName;
         this.text = text;
