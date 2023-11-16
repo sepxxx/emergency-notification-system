@@ -1,6 +1,8 @@
 package com.bnk.recipientssaverntaskresolver.controllers;
 
+import com.bnk.recipientssaverntaskresolver.entities.User;
 import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Recipient;
+import com.bnk.recipientssaverntaskresolver.repositories.UserRepository;
 import com.bnk.recipientssaverntaskresolver.services.RecipientSaverService;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -26,28 +29,33 @@ import java.util.List;
 @Slf4j
 public class CsvController {
     RecipientSaverService recipientSaverService;
+//    UserRepository userRepository;
 
 
     @PostMapping("/upload")
     //
-    public void uploadCSV(@RequestParam("file") MultipartFile file, @RequestParam String recipientsListName) throws IOException {
+    public void uploadCSV(@RequestParam("file") MultipartFile file, @RequestParam String recipientsListName, @RequestParam Long userId) throws IOException {
 //        log.info("uploadCSV file desc: {} {} {}", file.getName(),file.getOriginalFilename(),
 //                file.getContentType());
         log.info("uploadCSV: file: {} recipientsListName: {} ", file.getOriginalFilename(), recipientsListName);
 
-        CsvMapper csvMapper = new CsvMapper();
-        CsvSchema csvSchema = csvMapper.schemaFor(Recipient.class)
-                .withColumnSeparator(',').withSkipFirstDataRow(true);
-        Reader myReader = new InputStreamReader(file.getInputStream());
 
-        MappingIterator<Recipient> iterator = csvMapper
-                .readerFor(Recipient.class)
-                .with(csvSchema)
-                .readValues(myReader);
-        List<Recipient> elements = iterator.readAll();
 
-//        System.out.println(elements.size());
-        recipientSaverService.saveRecipients(elements, recipientsListName);
-//        return elements;
+
+            CsvMapper csvMapper = new CsvMapper();
+            CsvSchema csvSchema = csvMapper.schemaFor(Recipient.class)
+                    .withColumnSeparator(',').withSkipFirstDataRow(true);
+            Reader myReader = new InputStreamReader(file.getInputStream());
+
+            MappingIterator<Recipient> iterator = csvMapper
+                    .readerFor(Recipient.class)
+                    .with(csvSchema)
+                    .readValues(myReader);
+            List<Recipient> elements = iterator.readAll();
+
+
+            recipientSaverService.saveRecipients(elements, recipientsListName, userId);
+
+
     }
 }

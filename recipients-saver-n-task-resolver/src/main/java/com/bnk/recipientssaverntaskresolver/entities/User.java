@@ -27,7 +27,8 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<RecipientList> recipientLists;
 
-    @OneToMany(mappedBy = "user")
+//    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+@OneToMany(mappedBy = "user")
     List<Task> taskList;
 
     public void addTaskToList(Task task) {

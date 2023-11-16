@@ -30,5 +30,6 @@ public class Task {
     public Task(String recipientListName, String text, User user) {
         this.recipientListName = recipientListName;
         this.text = text;
+        this.user = user;
     }
 }

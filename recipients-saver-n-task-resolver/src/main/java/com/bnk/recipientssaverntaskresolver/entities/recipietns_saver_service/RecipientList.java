@@ -45,4 +45,9 @@ public class RecipientList {
     public RecipientList(String name) {
         this.name = name;
     }
+
+    public RecipientList(String name, User user) {
+        this.name = name;
+        this.user = user;
+    }
 }
