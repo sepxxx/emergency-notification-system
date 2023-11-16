@@ -17,6 +17,12 @@ import java.util.List;
 @Getter
 @Table(name="users")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+
+@NamedEntityGraph(name="user-entity-graph-with-recipient-lists-n-task-list",
+attributeNodes = {
+        @NamedAttributeNode("recipientLists"),
+        @NamedAttributeNode("taskList")
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,13 +34,7 @@ public class User {
     List<RecipientList> recipientLists;
 
 //    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-@OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     List<Task> taskList;
 
-    public void addTaskToList(Task task) {
-        if(taskList==null) {
-            taskList = new ArrayList<>();
-        }
-        taskList.add(task);
-    }
  }

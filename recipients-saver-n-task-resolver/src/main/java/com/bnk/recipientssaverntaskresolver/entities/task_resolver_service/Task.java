@@ -24,7 +24,8 @@ public class Task {
     @Column(name="text")
     String text;
 
-    @ManyToOne
+//    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     User user;
     public Task(String recipientListName, String text, User user) {
