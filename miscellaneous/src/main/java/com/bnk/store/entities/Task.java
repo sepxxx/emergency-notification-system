@@ -1,9 +1,8 @@
-package com.bnk.recipientssaverntaskresolver.entities.task_resolver_service;
+package com.bnk.store.entities;
 
 
 import com.bnk.recipientssaverntaskresolver.entities.User;
 import jakarta.persistence.*;
-import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
