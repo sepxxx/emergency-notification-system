@@ -1,0 +1,13 @@
+
+datasource:
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost/notification
+  username: postgres
+  password: postgres
+#  jpa:
+#    properties:
+#      hibernate.format_sql: true
+#    hibernate:
+#      ddl-auto: update
+##      format-sql: true
+#    show-sql: true

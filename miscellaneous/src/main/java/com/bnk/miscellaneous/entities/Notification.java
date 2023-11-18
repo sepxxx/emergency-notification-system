@@ -1,6 +1,7 @@
-package com.bnk.notificationsender.entities;
+package com.bnk.miscellaneous.entities;
 
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Recipient;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity

@@ -1,7 +1,7 @@
-package com.bnk.notificationsender.repositories;
+package com.bnk.miscellaneous.repositories;
 
 
-import com.bnk.store.entities.Task;
+import com.bnk.miscellaneous.entities.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

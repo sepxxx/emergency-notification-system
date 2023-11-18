@@ -1,7 +1,7 @@
-package com.bnk.store.repositories;
+package com.bnk.miscellaneous.repositories;
 
 
-import com.bnk.store.entities.Notification;
+import com.bnk.miscellaneous.entities.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NotificationRepository

@@ -1,12 +1,12 @@
-package com.bnk.notificationsender.entities;
+package com.bnk.miscellaneous.entities;
 
 
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientList;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import jakarta.persistence.*;
+import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,10 +1,9 @@
-package com.bnk.store.entities;
+package com.bnk.miscellaneous.entities;
 
 
-import com.bnk.recipientssaverntaskresolver.entities.User;
-import jakarta.persistence.*;
 import lombok.experimental.FieldDefaults;
-
+import jakarta.persistence.*;
+import lombok.*;
 import java.time.Instant;
 
 @Entity
