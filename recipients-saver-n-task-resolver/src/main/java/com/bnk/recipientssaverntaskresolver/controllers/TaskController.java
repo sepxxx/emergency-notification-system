@@ -1,8 +1,8 @@
 package com.bnk.recipientssaverntaskresolver.controllers;
 
 
+import com.bnk.miscellaneous.entities.Task;
 import com.bnk.recipientssaverntaskresolver.dtos.TaskDto;
-import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Task;
 import com.bnk.recipientssaverntaskresolver.repositories.TaskRepository;
 import com.bnk.recipientssaverntaskresolver.services.TaskResolverService;
 import lombok.AccessLevel;

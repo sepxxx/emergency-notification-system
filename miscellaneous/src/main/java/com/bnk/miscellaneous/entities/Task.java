@@ -28,16 +28,16 @@ public class Task {
     @JoinColumn(name="user_id")
     User user;
 
-    @Column(name="created_at")
-    Instant createdAt = Instant.now();
-//    Instant updatedAt;
-
-    @Column(name="next_retry_at")
-    Instant nextRetryTime = createdAt;
-//    @Column(name="latest_try_at")
-//    Instant latestTryAt;
-
-    boolean status = false;
+//    @Column(name="created_at")
+//    Instant createdAt = Instant.now();
+////    Instant updatedAt;
+//
+//    @Column(name="next_retry_at")
+//    Instant nextRetryTime = createdAt;
+////    @Column(name="latest_try_at")
+////    Instant latestTryAt;
+//
+//    boolean status = false;
 
 
 

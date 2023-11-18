@@ -1,11 +1,11 @@
 package com.bnk.recipientssaverntaskresolver.services;
 
+import com.bnk.miscellaneous.entities.Notification;
+import com.bnk.miscellaneous.entities.RecipientList;
+import com.bnk.miscellaneous.entities.Task;
+import com.bnk.miscellaneous.entities.User;
+import com.bnk.miscellaneous.repositories.NotificationRepository;
 import com.bnk.recipientssaverntaskresolver.dtos.TaskDto;
-import com.bnk.recipientssaverntaskresolver.entities.User;
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Recipient;
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientList;
-import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Notification;
-import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Task;
 import com.bnk.recipientssaverntaskresolver.repositories.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -57,7 +57,6 @@ public class TaskResolverService {
                                notificationRepository.save(
                                        new Notification(
                                                recipient,
-                                               (short) 0,
                                                task)
                                );
                        }

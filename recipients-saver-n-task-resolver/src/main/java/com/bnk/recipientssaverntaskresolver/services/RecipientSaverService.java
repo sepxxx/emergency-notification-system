@@ -1,8 +1,9 @@
 package com.bnk.recipientssaverntaskresolver.services;
 
-import com.bnk.recipientssaverntaskresolver.entities.User;
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.Recipient;
-import com.bnk.recipientssaverntaskresolver.entities.recipietns_saver_service.RecipientList;
+import com.bnk.miscellaneous.entities.Recipient;
+import com.bnk.miscellaneous.entities.RecipientList;
+import com.bnk.miscellaneous.entities.User;
+import com.bnk.recipientssaverntaskresolver.dtos.RecipientDto;
 import com.bnk.recipientssaverntaskresolver.repositories.RecipientListNameRepository;
 import com.bnk.recipientssaverntaskresolver.repositories.RecipientRepository;
 import com.bnk.recipientssaverntaskresolver.repositories.UserRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -23,9 +25,18 @@ public class RecipientSaverService {
     RecipientListNameRepository recipientListNameRepository;
     UserRepository userRepository;
 
+
     @Transactional
-    public void saveRecipients(List<Recipient> recipientsWithoutIds, String recipientsListName, Long userId) {
-        List<Recipient> recipientsWithIds = recipientRepository.saveAll(recipientsWithoutIds);
+    public void saveRecipients(List<RecipientDto> recipientDtosWithoutIds, String recipientsListName, Long userId) {
+
+        List<Recipient> recipientsWithIds = recipientRepository
+                .saveAll(recipientDtosWithoutIds.stream().map(recipientDto ->
+                                new Recipient(
+                recipientDto.getLastname(),
+                recipientDto.getEmail(),
+                recipientDto.getTg(),
+                recipientDto.getToken())
+                ).collect(Collectors.toSet()));
 
 
 

@@ -1,25 +1,59 @@
 package com.bnk.notificationsender.services;
 
+import com.bnk.miscellaneous.entities.Notification;
+import com.bnk.miscellaneous.entities.Recipient;
+import com.bnk.miscellaneous.repositories.NotificationRepository;
+import jakarta.transaction.Transactional;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.util.Optional;
+import java.util.Random;
+
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FetchAndExecuteTaskService {
 //    TaskRepository taskRepository;
-//
-//    ///ВНИМАНИЕ
-//    //таска выполняется внутри открытой транзакции
-//    //используется пессимичтическая блокировка
-//
-//    @Transactional
-//    public void fetchAndExecuteTask() {
-//        Task task = taskRepository.findNextTask(LocalDateTime.now());
-//
-//        try {
-//            handle(task);
-//            task.status = SUCCESS;
-//        } catch(e: Exception) {
-//            task.status = ERROR;
-//        }
-//
-//        taskRepository.update(task);
-//    }
+    NotificationRepository notificationRepository;
+
+    ///ВНИМАНИЕ
+    //таска выполняется внутри открытой транзакции
+    //используется пессимичтическая блокировка
+
+    @Transactional
+    @Scheduled(fixedDelay = 10L)
+//    @Scheduled(cron = "*/5 * * * * *")
+    public void fetchAndSendNotification() {
+        Random r = new Random();
+//        log.info("FETCHING STARTED");
+        Optional<Notification> notificationOptional = notificationRepository.findNextNotificationToSend();
+
+        if(notificationOptional.isPresent()) {
+            Notification notification = notificationOptional.get();
+            try {
+                Recipient recipient = notification.getRecipient();
+                Thread.sleep(10);//тут типа отправляем
+
+                if(r.nextInt(11) < 2) {
+                    log.info("Could deliver msg to: "+ recipient.getEmail());
+                    throw new RuntimeException("Could deliver msg to: " + recipient.getEmail());
+                }
+                notification.setStatus(true);
+                log.info("notif sent to "+ recipient.getEmail());
+            } catch (Exception e) {
+                notification.setNextRetryAt(Instant.now().plusMillis(r.nextInt(500, 3000)));
+            }
+
+        }
+    }
 
 //    """
 //        select * from tasks

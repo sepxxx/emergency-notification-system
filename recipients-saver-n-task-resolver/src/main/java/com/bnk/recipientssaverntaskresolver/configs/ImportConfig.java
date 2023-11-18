@@ -1,4 +1,4 @@
-package com.bnk.notificationsender.configs;
+package com.bnk.recipientssaverntaskresolver.configs;
 
 import com.bnk.miscellaneous.EnableStore;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +10,5 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         EnableStore.class
 })
 @Configuration
-@EnableScheduling
 public class ImportConfig {
 }
