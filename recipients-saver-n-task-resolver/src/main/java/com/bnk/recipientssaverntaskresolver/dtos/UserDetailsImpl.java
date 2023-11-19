@@ -1,4 +1,4 @@
-package com.bnk.recipientssaverntaskresolver.services;
+package com.bnk.recipientssaverntaskresolver.dtos;
 
 import com.bnk.miscellaneous.entities.User;
 import org.springframework.security.core.userdetails.UserDetails;

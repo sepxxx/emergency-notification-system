@@ -1,14 +1,16 @@
 package com.bnk.recipientssaverntaskresolver.controllers;
 
-
-import com.bnk.miscellaneous.entities.Task;
-import com.bnk.recipientssaverntaskresolver.dtos.TaskDto;
+import com.bnk.recipientssaverntaskresolver.dtos.TaskRequestDto;
+import com.bnk.recipientssaverntaskresolver.dtos.TaskResponseDto;
 import com.bnk.recipientssaverntaskresolver.repositories.TaskRepository;
 import com.bnk.recipientssaverntaskresolver.services.TaskResolverService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @AllArgsConstructor
@@ -16,18 +18,14 @@ import org.springframework.web.bind.annotation.*;
 public class TaskController {
     TaskResolverService taskResolverService;
 
-    TaskRepository taskRepository;
-
     @PostMapping("/task/new")
-    public void saveTaskAndCreateNotifications(@RequestBody TaskDto taskDto) {
-        taskResolverService.saveTaskAndCreateNotifications(taskDto);
+    @ResponseStatus(HttpStatus.CREATED)
+    public TaskResponseDto saveTaskAndCreateNotifications(@RequestBody TaskRequestDto taskRequestDto, Principal principal) {
+        return taskResolverService.saveTaskAndCreateNotifications(taskRequestDto, principal.getName());
     }
 
     @GetMapping("/task/{id}/info")
-    public void getTaskInfoById(@PathVariable("id") Long id) {
-        Task task = taskRepository.getById(id);
-
-//        System.out.println(task.getId());
-        System.out.println(task.getUser().getUsername());
+    public TaskResponseDto getTaskInfoById(@PathVariable("id") Long id, Principal principal) {
+        return taskResolverService.getTaskInfoById(id, principal.getName());
     }
 }

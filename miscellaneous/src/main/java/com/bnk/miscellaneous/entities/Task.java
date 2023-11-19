@@ -13,6 +13,7 @@ import java.time.Instant;
 @Getter
 @Table(name="tasks")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

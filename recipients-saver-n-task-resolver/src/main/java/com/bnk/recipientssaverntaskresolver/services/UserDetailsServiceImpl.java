@@ -1,11 +1,8 @@
 package com.bnk.recipientssaverntaskresolver.services;
 
 import com.bnk.miscellaneous.entities.User;
+import com.bnk.recipientssaverntaskresolver.dtos.UserDetailsImpl;
 import com.bnk.recipientssaverntaskresolver.repositories.UserRepository;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;

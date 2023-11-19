@@ -35,25 +35,7 @@ public class SecurityConfig {
 
      JwtAuthFilter authFilter;
      PasswordEncoder passwordEncoder;
-//     Configuring HttpSecurity
-//    @Bean
-//    @SneakyThrows
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests()
-//                .requestMatchers("/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
-//                .and()
-//                .authorizeHttpRequests().requestMatchers("/auth/user/**").authenticated()
-//                .and()
-//                .authorizeHttpRequests().requestMatchers("/auth/admin/**").authenticated()
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authenticationProvider(authenticationProvider())
-//                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-//                .build();
-//    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http    .csrf(AbstractHttpConfigurer::disable)
@@ -74,30 +56,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
-
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(Customizer.withDefaults())
-//                .authorizeHttpRequests(authorize -> authorize
-//                        .anyRequest().authenticated()
-//                )
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin(Customizer.withDefaults())
-//                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
-//        return http.build();
-//    }
-
-
-
-
-
-
-
-
 
     @Bean
     public AuthenticationProvider authenticationProvider() {

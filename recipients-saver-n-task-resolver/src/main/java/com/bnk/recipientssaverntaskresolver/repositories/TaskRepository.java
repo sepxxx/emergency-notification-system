@@ -16,4 +16,6 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
         limit 1 for update skip locked
     """, nativeQuery = true)
     Optional<Task> findNextFreeTask();
+
+
 }

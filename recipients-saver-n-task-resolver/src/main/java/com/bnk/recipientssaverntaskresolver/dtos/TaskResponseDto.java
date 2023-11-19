@@ -1,5 +1,6 @@
 package com.bnk.recipientssaverntaskresolver.dtos;
 
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +11,10 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaskDto {
-    long userId;
-    String recipientsListName;
+public class TaskResponseDto {
+    Long id;
+    String recipientListName;
     String text;
+    Long done;
+    Long total;
 }
