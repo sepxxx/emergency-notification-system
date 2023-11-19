@@ -2,8 +2,8 @@ package com.bnk.recipientssaverntaskresolver.controllers;
 
 
 import com.bnk.miscellaneous.entities.User;
-import com.bnk.recipientssaverntaskresolver.dtos.AuthRequestDto;
-import com.bnk.recipientssaverntaskresolver.dtos.UserRegistrationRequestDto;
+import com.bnk.recipientssaverntaskresolver.dtos.requests.AuthRequestDto;
+import com.bnk.recipientssaverntaskresolver.dtos.requests.UserRegistrationRequestDto;
 import com.bnk.recipientssaverntaskresolver.services.JwtService;
 import com.bnk.recipientssaverntaskresolver.services.UserDetailsServiceImpl;
 import lombok.AccessLevel;

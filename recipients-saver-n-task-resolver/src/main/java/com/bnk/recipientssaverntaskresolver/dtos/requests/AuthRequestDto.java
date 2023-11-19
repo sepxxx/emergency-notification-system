@@ -1,4 +1,4 @@
-package com.bnk.recipientssaverntaskresolver.dtos;
+package com.bnk.recipientssaverntaskresolver.dtos.requests;
 
 
 import lombok.AccessLevel;

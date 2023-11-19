@@ -6,8 +6,8 @@ import com.bnk.miscellaneous.entities.Task;
 import com.bnk.miscellaneous.entities.User;
 import com.bnk.miscellaneous.repositories.NotificationRepository;
 
-import com.bnk.recipientssaverntaskresolver.dtos.TaskRequestDto;
-import com.bnk.recipientssaverntaskresolver.dtos.TaskResponseDto;
+import com.bnk.recipientssaverntaskresolver.dtos.requests.TaskRequestDto;
+import com.bnk.recipientssaverntaskresolver.dtos.responses.TaskResponseDto;
 import com.bnk.recipientssaverntaskresolver.exceptions.NotFoundException;
 import com.bnk.recipientssaverntaskresolver.exceptions.UnauthorizedException;
 import com.bnk.recipientssaverntaskresolver.repositories.*;
@@ -15,14 +15,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.security.Principal;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor

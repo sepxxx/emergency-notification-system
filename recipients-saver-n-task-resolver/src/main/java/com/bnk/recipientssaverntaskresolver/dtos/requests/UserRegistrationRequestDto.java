@@ -1,4 +1,5 @@
-package com.bnk.recipientssaverntaskresolver.dtos;
+package com.bnk.recipientssaverntaskresolver.dtos.requests;
+
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,8 +11,9 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TaskRequestDto {
-//    long userId;
-    String recipientsListName;
-    String text;
+public class UserRegistrationRequestDto {
+     String username;
+     String email;
+     String password;
+     String roles;
 }

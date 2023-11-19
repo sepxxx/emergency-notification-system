@@ -1,4 +1,4 @@
-package com.bnk.recipientssaverntaskresolver.dtos;
+package com.bnk.recipientssaverntaskresolver.dtos.responses;
 
 
 import lombok.AccessLevel;
@@ -11,9 +11,8 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserRegistrationRequestDto {
-     String username;
-     String email;
-     String password;
-     String roles;
+public class RecipientListResponseDto {
+    Long id;
+    String name;
+    int total;
 }

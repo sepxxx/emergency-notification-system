@@ -1,8 +1,7 @@
 package com.bnk.recipientssaverntaskresolver.controllers;
 
-import com.bnk.recipientssaverntaskresolver.dtos.TaskRequestDto;
-import com.bnk.recipientssaverntaskresolver.dtos.TaskResponseDto;
-import com.bnk.recipientssaverntaskresolver.repositories.TaskRepository;
+import com.bnk.recipientssaverntaskresolver.dtos.requests.TaskRequestDto;
+import com.bnk.recipientssaverntaskresolver.dtos.responses.TaskResponseDto;
 import com.bnk.recipientssaverntaskresolver.services.TaskResolverService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
