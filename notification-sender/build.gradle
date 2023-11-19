@@ -30,6 +30,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // https://mvnrepository.com/artifact/com.clevertap.apns/apns-http2
+    implementation 'com.clevertap.apns:apns-http2:2.1.0'
+
+
 }
 
 tasks.named('bootBuildImage') {

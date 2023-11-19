@@ -21,12 +21,17 @@ public class User {
     @Column(name="username")
     String username;
 
+    @Column(name="password")
+    String password;
+
     @OneToMany(mappedBy = "user")
     List<RecipientList> recipientLists;
 
 //    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-@OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     List<Task> taskList;
+
+    String roles;
 
     public void addTaskToList(Task task) {
         if(taskList==null) {
@@ -34,4 +39,10 @@ public class User {
         }
         taskList.add(task);
     }
- }
+
+    public User(String username, String password, String roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
+}

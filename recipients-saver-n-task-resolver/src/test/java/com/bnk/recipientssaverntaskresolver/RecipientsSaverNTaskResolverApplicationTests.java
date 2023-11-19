@@ -1,7 +1,7 @@
 package com.bnk.recipientssaverntaskresolver;
 
-import com.bnk.recipientssaverntaskresolver.entities.User;
-import com.bnk.recipientssaverntaskresolver.entities.task_resolver_service.Task;
+
+import com.bnk.miscellaneous.entities.Task;
 import com.bnk.recipientssaverntaskresolver.repositories.TaskRepository;
 import com.bnk.recipientssaverntaskresolver.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
