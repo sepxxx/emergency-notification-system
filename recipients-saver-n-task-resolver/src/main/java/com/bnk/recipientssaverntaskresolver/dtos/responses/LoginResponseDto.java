@@ -9,8 +9,13 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RecipientListResponseDto {
+
+
+public class LoginResponseDto {
     Long id;
-    String name;
-    int total;
+    String firstName;
+    String lastName;
+    String role;
+    String accessToken;
+    String refreshToken;
 }

@@ -1,4 +1,4 @@
-package com.bnk.recipientssaverntaskresolver.dtos.responses;
+package com.bnk.recipientssaverntaskresolver.dtos.requests;
 
 
 import lombok.*;
@@ -9,8 +9,6 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RecipientListResponseDto {
-    Long id;
-    String name;
-    int total;
+public class RefreshRequestDto {
+    public String refreshToken;
 }

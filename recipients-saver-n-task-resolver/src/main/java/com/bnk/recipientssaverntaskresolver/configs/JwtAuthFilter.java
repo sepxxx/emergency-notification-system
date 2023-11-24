@@ -34,7 +34,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
-        log.info("authHeader {}", authHeader);
+//        log.info("doFilterInternal authHeader {} request.getHeaderNames:{} request: {}", authHeader, request.getHeaderNames(), request);
+        log.info("doFilterInternal authHeader {}", authHeader);
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             token = authHeader.substring(7);
             username = jwtService.extractUsername(token);
@@ -45,7 +46,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);//по имени из jwt подгрузим юзера
             log.info("никого в контексте нет userDetails: {}", userDetails);
 
-            if (jwtService.validateToken(token, userDetails)) {//странно что тут еще одна проверка на совпадение имен,
+            if (jwtService.validateToken(token)) {//странно что тут еще одна проверка на совпадение имен,
                 log.info("токeн валиден");
 
                 // мы же изначально по нему и грузили UserDetails

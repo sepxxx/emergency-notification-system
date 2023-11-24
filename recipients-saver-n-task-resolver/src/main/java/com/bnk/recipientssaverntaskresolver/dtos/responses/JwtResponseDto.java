@@ -9,8 +9,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RecipientListResponseDto {
-    Long id;
-    String name;
-    int total;
+public class JwtResponseDto {
+     String accessToken;
+     String refreshToken;
 }
