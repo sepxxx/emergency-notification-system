@@ -7,13 +7,16 @@ import com.bnk.recipientssaverntaskresolver.dtos.requests.RefreshRequestDto;
 import com.bnk.recipientssaverntaskresolver.dtos.requests.UserRegistrationRequestDto;
 import com.bnk.recipientssaverntaskresolver.dtos.responses.JwtResponseDto;
 import com.bnk.recipientssaverntaskresolver.dtos.responses.LoginResponseDto;
+import com.bnk.recipientssaverntaskresolver.dtos.responses.UserDto;
 import com.bnk.recipientssaverntaskresolver.services.JwtService;
 import com.bnk.recipientssaverntaskresolver.services.UserDetailsServiceImpl;
+import com.bnk.recipientssaverntaskresolver.services.UserService;
 import jakarta.security.auth.message.AuthException;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,18 +24,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
-@RequestMapping("/auth")
+//@RequestMapping("/auth")
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
+//@CrossOrigin(origins = {"http://localhost:4200/admin", "http://localhost:4200/"}, maxAge = 3600)
 public class UserController {
     UserDetailsServiceImpl userDetailsServiceImpl;
     JwtService jwtService;
     AuthenticationManager authenticationManager;
+    UserService userService;
 
-    @PostMapping("/register")
+    @PostMapping("/auth/register")
     public String addNewUser(@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
         return userDetailsServiceImpl.addUser(new User(
                 userRegistrationRequestDto.getUsername(),
@@ -53,8 +59,7 @@ public class UserController {
 //        return "Welcome to Admin Profile";
 //    }
 
-    @PostMapping("/login")
-
+    @PostMapping("/auth/login")
     public LoginResponseDto authenticateAndGetTokens(@RequestBody AuthRequestDto authRequestDto) {
         log.info("authenticateAndGetTokens authRequestDto: {}", authRequestDto);
         Authentication authentication = authenticationManager.authenticate(
@@ -75,9 +80,16 @@ public class UserController {
         }
     }
 
-    @PostMapping("/token")
-    public JwtResponseDto getAccessTokenByRefresh(@RequestBody RefreshRequestDto refreshRequestDto)  {
-            return jwtService.refreshAccessToken(refreshRequestDto.getRefreshToken());
+    @PostMapping("/auth/token")
+    public String getAccessTokenByRefresh(@RequestBody RefreshRequestDto refreshRequestDto)  {
+        log.info("getAccessTokenByRefresh RefreshRequestDto.getRefreshToken: {}", refreshRequestDto.getRefreshToken());
+        return jwtService.refreshAccessToken(refreshRequestDto.getRefreshToken());
+    }
+
+    @GetMapping("/users")
+//    @PreAuthorize("ROLE_USER")
+    public Set<UserDto> getAll() {
+        return userService.getAll();
     }
 
 }
