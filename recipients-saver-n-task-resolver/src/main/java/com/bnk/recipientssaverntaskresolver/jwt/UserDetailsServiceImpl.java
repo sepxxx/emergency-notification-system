@@ -1,7 +1,6 @@
-package com.bnk.recipientssaverntaskresolver.services;
+package com.bnk.recipientssaverntaskresolver.jwt;
 
 import com.bnk.miscellaneous.entities.User;
-import com.bnk.recipientssaverntaskresolver.dtos.UserDetailsImpl;
 import com.bnk.recipientssaverntaskresolver.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 

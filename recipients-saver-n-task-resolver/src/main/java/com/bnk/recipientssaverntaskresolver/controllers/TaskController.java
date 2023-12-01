@@ -2,6 +2,7 @@ package com.bnk.recipientssaverntaskresolver.controllers;
 
 import com.bnk.recipientssaverntaskresolver.dtos.requests.TaskRequestDto;
 import com.bnk.recipientssaverntaskresolver.dtos.responses.TaskResponseDto;
+import com.bnk.recipientssaverntaskresolver.exceptions.UnauthorizedException;
 import com.bnk.recipientssaverntaskresolver.services.TaskResolverService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -14,16 +15,17 @@ import java.security.Principal;
 @RestController
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequestMapping("/task")
 public class TaskController {
     TaskResolverService taskResolverService;
 
-    @PostMapping("/task/new")
+    @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponseDto saveTaskAndCreateNotifications(@RequestBody TaskRequestDto taskRequestDto, Principal principal) {
         return taskResolverService.saveTaskAndCreateNotifications(taskRequestDto, principal.getName());
     }
 
-    @GetMapping("/task/{id}/info")
+    @GetMapping("/{id}/info")
     public TaskResponseDto getTaskInfoById(@PathVariable("id") Long id, Principal principal) {
         return taskResolverService.getTaskInfoById(id, principal.getName());
     }

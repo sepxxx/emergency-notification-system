@@ -8,6 +8,7 @@ import com.bnk.miscellaneous.repositories.NotificationRepository;
 
 import com.bnk.recipientssaverntaskresolver.dtos.requests.TaskRequestDto;
 import com.bnk.recipientssaverntaskresolver.dtos.responses.TaskResponseDto;
+import com.bnk.recipientssaverntaskresolver.exceptions.ForbiddenException;
 import com.bnk.recipientssaverntaskresolver.exceptions.NotFoundException;
 import com.bnk.recipientssaverntaskresolver.exceptions.UnauthorizedException;
 import com.bnk.recipientssaverntaskresolver.repositories.*;
@@ -29,7 +30,7 @@ public class TaskResolverService {
     UserRepository userRepository;
 
 
-    public TaskResponseDto getTaskInfoById(Long id, String currentUsername) {
+    public TaskResponseDto getTaskInfoById(Long id, String currentUsername){
         log.info("getTaskInfoById id: {}, currentUsername: {} ",id, currentUsername);
 
         User user = userRepository.findByUsername(currentUsername)
@@ -38,11 +39,14 @@ public class TaskResolverService {
                 .orElseThrow(() -> new NotFoundException("Task by id "+id+ " not found"));
         log.info("getTaskInfoById task: {} ", task);
         log.info("getTaskInfoById user.getTaskList(): {} ", user.getTaskList());
+
+        //TODO а что если тут сделать метод который работает только с id, как повысится производительность?
         if(user.getTaskList().contains(task)) {
+            log.info("getTaskInfoById у юзера: {} есть таска: {} ", user.getId(), task.getId());
             return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(), 10L, 10L);
-        }
-        else
-            throw new UnauthorizedException("user: "+ currentUsername +"doesnt have access to task with id:"+ id);
+        } else
+//            throw new UnauthorizedException();
+            throw new ForbiddenException("user: "+ currentUsername +"doesnt have access to task with id:"+ id);
 
     }
 

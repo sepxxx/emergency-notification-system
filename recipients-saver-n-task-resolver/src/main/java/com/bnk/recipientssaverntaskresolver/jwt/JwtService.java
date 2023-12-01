@@ -1,4 +1,4 @@
-package com.bnk.recipientssaverntaskresolver.services;
+package com.bnk.recipientssaverntaskresolver.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

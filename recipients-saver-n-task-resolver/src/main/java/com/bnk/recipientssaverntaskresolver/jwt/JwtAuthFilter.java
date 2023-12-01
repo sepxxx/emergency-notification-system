@@ -1,7 +1,7 @@
-package com.bnk.recipientssaverntaskresolver.configs;
+package com.bnk.recipientssaverntaskresolver.jwt;
 
-import com.bnk.recipientssaverntaskresolver.services.JwtService;
-import com.bnk.recipientssaverntaskresolver.services.UserDetailsServiceImpl;
+import com.bnk.recipientssaverntaskresolver.jwt.JwtService;
+import com.bnk.recipientssaverntaskresolver.jwt.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

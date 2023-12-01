@@ -17,7 +17,11 @@ spring:
       ddl-auto: update
 #      format-sql: true
     show-sql: true
-
-
+server:
+  error:
+    include-stacktrace: ON_PARAM
+#server:
+#  error:
+#    include-message: always
 #  spring.jpa.show-sql=true
 #  spring.jpa.properties.hibernate.format_sql=true
