@@ -18,7 +18,7 @@ public class UserService {
 
     public Set<UserDto> getAll() {
         return userRepository.findAll().stream()
-                .map(u->new UserDto(u.getId(), u.getUsername(), u.getRoles()))
+                .map(u->new UserDto(u.getId(), u.getUsername(), u.getRoles(), u.getImageUrl()))
                 .collect(Collectors.toSet());
     }
 }

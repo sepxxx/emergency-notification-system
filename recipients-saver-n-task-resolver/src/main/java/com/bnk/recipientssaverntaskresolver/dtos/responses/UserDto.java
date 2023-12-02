@@ -13,4 +13,5 @@ public class UserDto {
     Long id;
     String username;
     String role;
+    String imageUrl;
 }

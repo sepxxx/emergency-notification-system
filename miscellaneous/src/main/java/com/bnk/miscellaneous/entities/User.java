@@ -20,7 +20,12 @@ public class User {
     long id;
     @Column(name="username")
     String username;
-
+//    @Column(name="firstname")
+//    String firstname;
+//    @Column(name="lastname")
+//    String lastname;
+    @Column(name="image_url")
+    String imageUrl;
     @Column(name="password")
     String password;
 
