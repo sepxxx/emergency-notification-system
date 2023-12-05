@@ -4,14 +4,17 @@ package com.bnk.recipientssaverntaskresolver.controllers;
 import com.bnk.miscellaneous.entities.User;
 import com.bnk.recipientssaverntaskresolver.dtos.requests.AuthRequestDto;
 import com.bnk.recipientssaverntaskresolver.dtos.requests.UserRegistrationRequestDto;
+import com.bnk.recipientssaverntaskresolver.dtos.responses.LoginResponseDto;
 import com.bnk.recipientssaverntaskresolver.jwt.JwtService;
 import com.bnk.recipientssaverntaskresolver.jwt.UserDetailsServiceImpl;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +22,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@Slf4j
 public class UserController {
     UserDetailsServiceImpl userDetailsServiceImpl;
     JwtService jwtService;
     AuthenticationManager authenticationManager;
 
-    @PostMapping("/addNewUser")
+    @PostMapping("/register")
     public String addNewUser(@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
         return userDetailsServiceImpl.addUser(new User(
                 userRegistrationRequestDto.getUsername(),
@@ -45,13 +49,21 @@ public class UserController {
 //        return "Welcome to Admin Profile";
 //    }
 
-    @PostMapping("/generateToken")
-    public String authenticateAndGetToken(@RequestBody AuthRequestDto authRequestDto) {
+
+    //TODO: логику вынести из контроллера
+    @PostMapping("/login")
+    public LoginResponseDto authenticate(@RequestBody AuthRequestDto authRequestDto) {
+        log.info(" authenticate authRequestDto: {} ", authRequestDto);
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequestDto.getUsername(),
                         authRequestDto.getPassword()));
         if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequestDto.getUsername());
+            String role = "ROLE_USER";
+            //TODO: не очень хорошая проверка, странно что нужно каждый раз создавать SGA
+            if(authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))
+                role = "ROLE_ADMIN";
+            String jwt = jwtService.generateToken(authRequestDto.getUsername());
+            return new LoginResponseDto(authRequestDto.getUsername(), role, jwt);
         } else {
             throw new UsernameNotFoundException("invalid user request !");
         }
