@@ -68,7 +68,7 @@ public class TaskResolverService {
 
         String recipientListName = taskRequestDto.getRecipientsListName();
         RecipientList recipientList = recipientListNameRepository
-                .findByName(recipientListName).orElseThrow(() -> new NotFoundException("recipientList with name: "+recipientListName+ " not found"));
+                .findByNameAndUser(recipientListName, user).orElseThrow(() -> new NotFoundException("recipientList with name: "+recipientListName+ " not found"));
 
        //нормально ли делать много save здесь?
         recipientList

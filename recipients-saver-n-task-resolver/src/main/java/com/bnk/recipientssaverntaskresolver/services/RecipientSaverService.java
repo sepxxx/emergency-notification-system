@@ -39,6 +39,7 @@ public class RecipientSaverService {
 
     @SneakyThrows
     @Transactional
+    //вот тут можно к имени файла добавлять имя пользователя для того чтобы
     public RecipientListResponseDto saveRecipients(MultipartFile file, String recipientsListName, String currentUsername) {
         log.info("uploadCSV: file: {} recipientsListName: {} currentUsername:{}", file.getOriginalFilename(), recipientsListName, currentUsername);
         List<RecipientDto>  recipientDtosWithoutIds = parseCsv(file);
@@ -53,10 +54,12 @@ public class RecipientSaverService {
 
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new NotFoundException("User not found"));
-
-        RecipientList recipientListWithId = recipientListNameRepository.findByName(recipientsListName)
+        //тут нужна проверка чтобы не записать в лист с тем же именем но другому юзеру - сделал в самом методе
+        RecipientList recipientListWithId = recipientListNameRepository.findByNameAndUser(recipientsListName, user)
                 .orElseGet(() -> recipientListNameRepository
                 .save(new RecipientList(recipientsListName, user)));
+
+
 
         recipientListWithId.appendRecipientList(recipientsWithIds);
 
