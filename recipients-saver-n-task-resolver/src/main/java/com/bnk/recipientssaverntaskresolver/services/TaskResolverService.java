@@ -19,6 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -83,4 +86,16 @@ public class TaskResolverService {
         return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(),10L,10L);
     }
 
+    //тут вот тоже вроде не ок
+    //внутри у меня сет а отдаю наружу лист
+
+    public List<TaskResponseDto> getTaskList(String currentUsername) {
+        log.info(" getTaskList currentUsername: {} ", currentUsername);
+        User user = userRepository.findByUsername(currentUsername)
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        return user.getTaskList().stream().map(task-> {
+            return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(),
+                   10L,10L);
+        }).collect(Collectors.toList());
+    }
 }

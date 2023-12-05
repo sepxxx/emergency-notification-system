@@ -21,12 +21,11 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 //        return handleException(ex, request);
 //    }
     @ExceptionHandler(ForbiddenException.class)
-    protected ResponseEntity<ForbiddenException> handleForbiddenException() {
-        return new ResponseEntity<>(new ForbiddenException("FORBIDDEN FOR ACTION"), HttpStatus.FORBIDDEN);
+    protected ResponseEntity<String> handleForbiddenException() {
+        return new ResponseEntity<>("FORBIDDEN FOR ACTION", HttpStatus.FORBIDDEN);
     }
-
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<NotFoundException> handleNotFoundException() {
-        return new ResponseEntity<>(new NotFoundException("NotFoundException"), HttpStatus.NOT_FOUND);
+    protected ResponseEntity<String> handleNotFoundException() {
+        return new ResponseEntity<>("NotFoundException", HttpStatus.NOT_FOUND);
     }
 }

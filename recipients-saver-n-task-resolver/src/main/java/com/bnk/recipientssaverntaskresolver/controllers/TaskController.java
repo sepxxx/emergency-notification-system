@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -19,6 +20,10 @@ import java.security.Principal;
 public class TaskController {
     TaskResolverService taskResolverService;
 
+
+    //Если инжектить principal на уровне метода сервиса,то ругается что мало параметров из котроллера
+    //если инжектить в сам сервис то - не находит бин
+    //здесь работает, но думаю не хорошо что просто передаю имя каждый раз
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public TaskResponseDto saveTaskAndCreateNotifications(@RequestBody TaskRequestDto taskRequestDto, Principal principal) {
@@ -29,4 +34,9 @@ public class TaskController {
     public TaskResponseDto getTaskInfoById(@PathVariable("id") Long id, Principal principal) {
         return taskResolverService.getTaskInfoById(id, principal.getName());
     }
-}
+
+    @GetMapping("/all")
+    public List<TaskResponseDto> getTasksList(Principal principal) {
+        return taskResolverService.getTaskList(principal.getName());
+    }
+ }
