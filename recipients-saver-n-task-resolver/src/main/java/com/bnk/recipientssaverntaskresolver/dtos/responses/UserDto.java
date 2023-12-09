@@ -13,5 +13,6 @@ public class UserDto {
     Long id;
     String username;
     String role;
-    String imageUrl;
+//    String imageUrl;
+    byte[] imageData;
 }

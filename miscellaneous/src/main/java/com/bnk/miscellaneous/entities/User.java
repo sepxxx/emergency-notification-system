@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Type;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,8 +26,12 @@ public class User {
 //    String firstname;
 //    @Column(name="lastname")
 //    String lastname;
-    @Column(name="image_url")
-    String imageUrl;
+//    @Column(name="image_url")
+//    String imageUrl;
+    @Lob
+//    @Basic(fetch = FetchType.EAGER)
+//    @Type("org.hibernate.type.ImageType")
+    byte[] imageData;
     @Column(name="password")
     String password;
 
