@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +47,8 @@ public class TaskResolverService {
         //TODO а что если тут сделать метод который работает только с id, как повысится производительность?
         if(user.getTaskList().contains(task)) {
             log.info("getTaskInfoById у юзера: {} есть таска: {} ", user.getId(), task.getId());
-            return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(), 10L, 10L);
+            return new TaskResponseDto(task.getId(), task.getRecipientListName(),
+                    task.getText(),task.getCreatedAt(), 10L, 10L);
         } else
 //            throw new UnauthorizedException();
             throw new ForbiddenException("user: "+ currentUsername +"doesnt have access to task with id:"+ id);
@@ -83,7 +85,8 @@ public class TaskResolverService {
                }
        );
 
-        return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(),10L,10L);
+        return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(),
+                LocalDateTime.now() ,10L,10L);
     }
 
     //тут вот тоже вроде не ок
@@ -94,7 +97,7 @@ public class TaskResolverService {
         User user = userRepository.findByUsername(currentUsername)
                 .orElseThrow(() -> new NotFoundException("User not found"));
         return user.getTaskList().stream().map(task-> {
-            return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(),
+            return new TaskResponseDto(task.getId(), task.getRecipientListName(), task.getText(), task.getCreatedAt(),
                    10L,10L);
         }).collect(Collectors.toList());
     }

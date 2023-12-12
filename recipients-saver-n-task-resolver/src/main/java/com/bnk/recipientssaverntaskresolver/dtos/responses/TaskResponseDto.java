@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,6 +17,7 @@ public class TaskResponseDto {
     Long id;
     String recipientListName;
     String text;
+    LocalDateTime creationTime;
     Long done;
     Long total;
 }

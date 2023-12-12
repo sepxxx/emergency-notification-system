@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -29,8 +30,8 @@ public class Task {
     @JoinColumn(name="user_id")
     User user;
 
-//    @Column(name="created_at")
-//    Instant createdAt = Instant.now();
+    @Column(name="created_at")
+    LocalDateTime createdAt = LocalDateTime.now();
 ////    Instant updatedAt;
 //
 //    @Column(name="next_retry_at")

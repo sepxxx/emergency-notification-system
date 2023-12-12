@@ -24,8 +24,9 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<String> handleForbiddenException() {
         return new ResponseEntity<>("FORBIDDEN FOR ACTION", HttpStatus.FORBIDDEN);
     }
+    //TODO: здесь добавить сообщения из exceptions
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<String> handleNotFoundException() {
+    protected ResponseEntity<String> handleNotFoundException(Exception ex) {
         return new ResponseEntity<>("NotFoundException", HttpStatus.NOT_FOUND);
     }
 }
