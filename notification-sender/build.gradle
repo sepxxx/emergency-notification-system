@@ -24,16 +24,13 @@ repositories {
 dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation project(':miscellaneous')
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // https://mvnrepository.com/artifact/com.clevertap.apns/apns-http2
-    implementation 'com.clevertap.apns:apns-http2:2.1.0'
-
-
 }
 
 tasks.named('bootBuildImage') {

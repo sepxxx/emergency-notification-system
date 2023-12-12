@@ -1,11 +1,9 @@
 package com.bnk.notificationsender.services;
 
+import com.bnk.miscellaneous.entities.Notification;
 import com.bnk.miscellaneous.entities.Recipient;
 import com.bnk.miscellaneous.repositories.NotificationRepository;
-import com.clevertap.apns.ApnsClient;
-import com.clevertap.apns.Notification;
-import com.clevertap.apns.NotificationResponse;
-import com.clevertap.apns.clients.ApnsClientBuilder;
+
 import jakarta.annotation.Resource;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -15,11 +13,15 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.Random;
@@ -30,57 +32,68 @@ import java.util.Random;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FetchAndExecuteTaskService {
-//    TaskRepository taskRepository;
+
     NotificationRepository notificationRepository;
-//    private ResourceLoader resourceLoader;
-    ApplicationContext applicationContext;
+
     ///ВНИМАНИЕ
     //таска выполняется внутри открытой транзакции
     //используется пессимичтическая блокировка
-
+    String title = "Attention";
+    int priority = 2;
+    String baseUrl = "https://alertzy.app/send";
+    Random r = new Random();
     @SneakyThrows
     @Transactional
     @Scheduled(fixedDelay = 5000L)
 //    @Scheduled(cron = "*/5 * * * * *")
+
     public void fetchAndSendNotification() {
 //        Random r = new Random();
-////        log.info("FETCHING STARTED");
-//        Optional<Notification> notificationOptional = notificationRepository.findNextNotificationToSend();
-//
-//        if(notificationOptional.isPresent()) {
-//            Notification notification = notificationOptional.get();
-//            try {
-//                Recipient recipient = notification.getRecipient();
+        log.info("FETCHING STARTED");
+        Optional<Notification> notificationOptional = notificationRepository.findNextNotificationToSend();
+
+        if(notificationOptional.isPresent()) {
+            Notification notification = notificationOptional.get();
+            try {
+                Recipient recipient = notification.getRecipient();
 //                Thread.sleep(10);//тут типа отправляем
-//
+
 //                if(r.nextInt(11) < 2) {
 //                    log.info("Could deliver msg to: "+ recipient.getEmail());
 //                    throw new RuntimeException("Could deliver msg to: " + recipient.getEmail());
 //                }
-//                notification.setStatus(true);
-//                log.info("notif sent to "+ recipient.getEmail());
-//            } catch (Exception e) {
-//                notification.setNextRetryAt(Instant.now().plusMillis(r.nextInt(500, 3000)));
-//            }
-//
-//        }
 
-        InputStream cert = applicationContext.getResource("classpath:certificate.p12").getInputStream();
 
-        final ApnsClient client = new ApnsClientBuilder()
-                .withProductionGateway()
-                .inSynchronousMode()
-                .withCertificate(cert)
-                .withPassword("")
-                .build();
-//                .withDefaultTopic("")
-        com.clevertap.apns.Notification n = new Notification
-                .Builder("937bf03b56ed54ad27c99b17181c9dee94071dd249d5724df85e02251e19c121")
-                .alertBody("Hello")
-                .build();
+                // Параметры запроса
+                String accountKey = recipient.getToken();
 
-        NotificationResponse response =  client.push(n);
-        System.out.println(response);
+                String message = notification.getTask().getText();
+                log.info("message {}", message);
+                String encodedMessage = URLEncoder.encode(message, "UTF-8");
+                String encodedTitle = URLEncoder.encode(title, "UTF-8");
+                // Построение URL с параметрами
+                String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
+                        .queryParam("accountKey", accountKey)
+                        .queryParam("title", encodedTitle)
+                        .queryParam("message", encodedMessage)
+                        .queryParam("priority", priority)
+                        .toUriString();
+
+                // Выполнение GET-запроса
+                ResponseEntity<String> response = new RestTemplate().getForEntity(url, String.class);
+
+                // Вывод результата
+                System.out.println("Response Code: " + response.getStatusCodeValue());
+                System.out.println("Response Body: " + response.getBody());
+                notification.setStatus(true);
+                log.info("notif sent to "+ recipient.getEmail());
+            } catch (Exception e) {
+                notification.setNextRetryAt(Instant.now().plusMillis(r.nextInt(500, 3000)));
+            }
+
+        }
+
+
 
     }
 
